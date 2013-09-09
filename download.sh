@@ -36,6 +36,9 @@ pushd ./puppet
 #fi
 
 sudo puppet apply --modulepath=$PUPPET_MODULES ./java.pp 2>&1 | tee -a java_install.log
+sudo rm -f /etc/alternatives/java
+sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java /etc/alternatives/java
+
 popd
 
 

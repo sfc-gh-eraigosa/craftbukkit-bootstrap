@@ -1,11 +1,4 @@
-    
-    import './puppet-java/manifests/init.pp'
-    class{ 'java':
-        version => '1.7.0_25',
-        tarfile =>  $::architecture ? {
-            'amd64' => 'jdk-7u25-linux-x64.tar.gz',
-            default => 'jdk-7u25-linux-i586.tar.gz',
-        },
-        force   => false
-    }
+package { 'openjdk-7-jre-headless':
+    ensure => present,
+  }
 

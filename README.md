@@ -13,28 +13,29 @@ Manual work:
  
  
 Setup:
+clone this repository to the server : 
+
+            git clone https://github.com/wenlock/craftbukkit-bootstrap.git
+            mv ./craftbukkit-bootstrap ./craftbukkit
+            cd ./craftbukkit
+            ./download.sh
+            ./start.sh install
+            ./start.sh start
  
- 1 - clone this repository to the server : git clone https://github.com/wenlock/craftbukkit-bootstrap.git
- 2 - mv ./craftbukkit-bootstrap ./craftbukkit
- 3 - cd ./craftbukkit
- 4 - ./download.sh
- 5 - ./start.sh install
- 6 - ./start.sh start
- 
- Have fun!
+Have fun!
  
 Uninstall:
 
- 1 - ./start.sh stop
- 2 - ./start.sh uninstall
- 3 - cd ..;rm -rf ./craftbukkit
+            ./start.sh stop
+            ./start.sh uninstall
+            cd ..;rm -rf ./craftbukkit
  
- Backups:
+Backups:
  
- 1 - ./start.sh backup
- 2 - echo "$(pwd)/start.sh backup" > /etc/cron.hourly/bukkit_backup
- 3 - chmod +x /etc/cron.hourly/bukkit_backup
- 4 - save or clone the craftbukkit/backups folder
+            ./start.sh backup
+            echo "$(pwd)/start.sh backup" > /etc/cron.hourly/bukkit_backup
+            chmod +x /etc/cron.hourly/bukkit_backup
+            save or clone the craftbukkit/backups folder
  
  
  

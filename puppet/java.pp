@@ -1,6 +1,6 @@
     
     import './puppet-java/manifests/init.pp'
-    class{ 'puppet-java::java':
+    class{ 'java':
         version => '1.7.0_25',
         tarfile =>  $::architecture ? {
             'amd64' => 'jdk-7u25-linux-x64.tar.gz',

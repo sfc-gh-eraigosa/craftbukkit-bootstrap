@@ -1,3 +1,5 @@
+    
+    import './puppet-java/manifests/init.pp'
     class{ 'puppet-java::java':
         version => '1.7.0_25',
         tarfile =>  $::architecture ? {

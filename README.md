@@ -8,8 +8,8 @@ The kids want a working bukkitcraft server from : http://dl.bukkit.org/downloads
 Yep, no problem, here are a copule scripts for ubuntu that can be run using your cloud account.
 
 Manual work:
-# - Update security groups or firewall to enable port 25565
-# - Add a DNS entry for the server to make it easier to find.
+* Update security groups or firewall to enable port 25565
+* Add a DNS entry for the server to make it easier to find.
  
  
 Setup:

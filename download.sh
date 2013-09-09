@@ -19,6 +19,12 @@ popd
 fi
 # best puppet bootstrap script ever!
 sudo ./config/install_puppet.sh
+
+# jdk deploy for java
+pushd ./puppet
+git clone https://github.com/objectcomputing/puppet-java
 sudo puppet apply ./puppet/java.pp
+popd
+
 
 popd

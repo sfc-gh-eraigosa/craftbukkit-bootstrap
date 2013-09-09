@@ -1,4 +1,4 @@
-class stableJDK {
+
     class{ 'java':
         version => '1.7.0_25',
         tarfile =>  $::architecture ? {
@@ -7,4 +7,4 @@ class stableJDK {
         },
         force   => false
     }
-}
+

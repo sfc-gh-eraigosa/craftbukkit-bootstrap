@@ -6,6 +6,7 @@ Bootstrap your craftbukkit server.
 The kids want a working bukkitcraft server from : http://dl.bukkit.org/downloads/craftbukkit/
 
 Yep, no problem, here are a copule scripts for ubuntu that can be run using your cloud account.
+Use at your leasure and you owe me a beer if you make money with this.
 
 Manual work:
 * Update security groups or firewall to enable port 25565

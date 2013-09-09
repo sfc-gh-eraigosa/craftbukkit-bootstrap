@@ -24,10 +24,11 @@ sudo ./config/install_puppet.sh
 
 # jdk deploy for java
 [[ ! -d ./puppet ]] && mkdir puppet
+PUPPET_MODULES=/etc/puppet/modules:$CURRENT_DIR/puppet
 pushd ./puppet
 wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-${JAVA_BUILD}/jdk-${JAVA_VERSION}-linux-x64.tar.gz"
 git clone https://github.com/objectcomputing/puppet-java
-sudo puppet apply ./puppet/java.pp
+sudo puppet apply --modulepath=$PUPPET_MODULES ./puppet/java.pp
 popd
 
 

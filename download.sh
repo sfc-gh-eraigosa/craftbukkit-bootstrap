@@ -17,7 +17,8 @@ pushd ./config
 git pull
 popd
 fi
-
+# best puppet bootstrap script ever!
+./config/install_puppet.sh
 sudo puppet apply ./puppet/java.pp
 
 popd

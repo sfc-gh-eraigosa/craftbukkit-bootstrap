@@ -1,6 +1,5 @@
-
-#!/bin/sh
-pushd "$(dirname "$0")"
+#!/bin/bash
+pushd "$(dirname $0)"
 CURRENT_DIR=`pwd`
 #settings
 
@@ -121,12 +120,48 @@ mc_world_backup() {
    as_user "tar -C \"$MCPATH\" -rf \"$BACKUP_FILE\" ${1}"
 }
 
+mc_backup_hpcloud() {
+   # keep the last 3 backups and a +1 week oldest backup on CDN
+   older_backup=$(((pushd $BACKUPPATH > /dev/null 2<&1;find . -mtime +3 -type f|sed 's/^\.\///g'|tail -1;popd >/dev/null 2<&1) && (pushd $BACKUPPATH > /dev/null 2<&1;ls -t | tail -1;popd > /dev/null 2<&1))|sort -g | tail -1)
+   pushd $BACKUPPATH > /dev/null 2<&1
+   last_few_backups=$(ls -tr |tail -1|sort | uniq -u)
+   popd > /dev/null 2<&1
+   echo "cleaning up all backups on offline storage"
+   hpcloud ls :mcbackup|xargs -i hpcloud rm :mcbackup/{}
+
+   hpcloud account:verify hp > /dev/null 2<&1
+   if [[ $? -eq 0 ]] ; then
+      echo "account verification passed."
+      hpcloud list|grep mcbackup
+      if [[ ! $? -eq 0 ]] ; then
+           hpcloud containers:add mcbackup
+      fi
+      pushd $BACKUPPATH > /dev/null 2<&1
+      echo "Last few backups $last_few_backups"
+      for backup_tar in $last_few_backups
+      do
+           if [[ -f $backup_tar ]] ; then
+              echo "offsite save of $backup_tar"
+              hpcloud cp $backup_tar :mcbackup
+           fi
+      done
+      if [[ -f $older_backup ]] ; then
+         echo "saving older backup $older_backup"
+         hpcloud cp $older_backup :mcbackup
+      fi
+      
+   else
+      echo "to backup with hpcloud run : hpcloud account:setup"
+   fi
+}
+
 mc_backup() {
 
 # remove the oldes 60 files
    if [ -d $BACKUPPATH ] ; then
       pushd $BACKUPPATH
-      (ls -t|head -n 60;ls)|sort|uniq -u|xargs rm
+      # clean up anything older than 3 days old
+      (ls -t|head -n 72;ls)|sort|uniq -u|xargs rm
       popd
    fi
 
@@ -156,13 +191,20 @@ mc_backup() {
 
    echo "Compressing backup..."
    as_user "gzip -f \"$BACKUP_FILE\""
+
+   mc_backup_hpcloud
    echo "Done."
 }
 
 mc_install() {
-  sudo ln -s $CURRENT_DIR/start.sh /etc/init.d/bukkit
+  [[ ! -L /etc/init.d/bukkit ]] && sudo ln -s $CURRENT_DIR/start.sh /etc/init.d/bukkit
   sudo chmod +x /etc/init.d/bukkit
   sudo update-rc.d bukkit defaults 98 02
+  chmod +x $CURRENT_DIR/hpcloud-cli-install.sh
+  $CURRENT_DIR/hpcloud-cli-install.sh
+# install crontab
+  PUPPET_MODULES=/etc/puppet/modules
+  sudo puppet apply --modulepath=$PUPPET_MODULES ./puppet/mc_backup.pp 
 }
 
 mc_uninstall() {

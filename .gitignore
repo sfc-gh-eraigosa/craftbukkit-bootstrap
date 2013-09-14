@@ -1,3 +1,5 @@
 server
 config
 backup
+bundles
+puppet/java_install.log

@@ -116,6 +116,11 @@ mc_update() {
   fi
 }
 
+mc_world_backup() {
+   BACKUP_FILE=$2
+   as_user "tar -C \"$MCPATH\" -rf \"$BACKUP_FILE\" ${1}"
+}
+
 mc_backup() {
 
 # remove the oldes 60 files
@@ -129,13 +134,23 @@ mc_backup() {
 
    NOW=`date "+%Y-%m-%d_%Hh%M"`
    BACKUP_FILE="$BACKUPPATH/${WORLD}_${NOW}.tar"
-   echo "Backing up minecraft world..."
-   #as_user "cd $MCPATH && cp -r $WORLD $BACKUPPATH/${WORLD}_`date "+%Y.%m.%d_%H.%M"`"
-   as_user "tar -C \"$MCPATH\" -cf \"$BACKUP_FILE\" $WORLD"
 
    echo "Backing up $SERVICE"
-   as_user "tar -C \"$MCPATH\" -rf \"$BACKUP_FILE\" $SERVICE"
    #as_user "cp \"$MCPATH/$SERVICE\" \"$BACKUPPATH/minecraft_server_${NOW}.jar\""
+   as_user "tar -C \"$MCPATH\" -cf \"$BACKUP_FILE\" $SERVICE"
+
+   echo "Backing up minecraft plugins..."
+   as_user "tar -C \"$MCPATH\" -rf \"$BACKUP_FILE\" plugins"
+
+   echo "Backing up minecraft worlds..."
+   #as_user "cd $MCPATH && cp -r $WORLD $BACKUPPATH/${WORLD}_`date "+%Y.%m.%d_%H.%M"`"
+   pushd "$MCPATH"
+   for world in $(find . -maxdepth 2 -name session* |sed 's/\/session\.lock//g')
+   do
+       echo "Working on world $world"
+       mc_world_backup $world $BACKUP_FILE
+   done
+   popd
 
    mc_saveon
 

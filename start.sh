@@ -1,5 +1,5 @@
 #!/bin/bash
-pushd "$(dirname $0)"
+pushd "$(dirname $0)" > /dev/null 2<&1
 CURRENT_DIR=`pwd`
 #settings
 
@@ -185,7 +185,7 @@ mc_backup() {
        echo "Working on world $world"
        mc_world_backup $world $BACKUP_FILE
    done
-   popd
+   popd > /dev/null 2<&1
 
    mc_saveon
 

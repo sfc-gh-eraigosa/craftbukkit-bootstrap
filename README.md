@@ -58,13 +58,13 @@ Controls all functions for your minecraft bukkit server on the running system.
 * controls the current run-time state of your server and saves work you have in progress.
 * sends a helpfull message to users currently on the server.
 
-### start.sh status ### 
+### start.sh status ###
 * check the current status for the server.
 
-### start.sh command ### 
+### start.sh command ###
 * Issue a command on the running minecraft server as op.
 
-### start.sh update ### 
+### start.sh update ###
 * This feature is still experimental, our goal is to provide a good way to update minecraft to the next release.  We currently ignore plugins.
 * Check amazonaws download site and update minecraft_server.jar with a new version.
 

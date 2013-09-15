@@ -205,6 +205,7 @@ mc_install() {
 # install crontab
   PUPPET_MODULES=/etc/puppet/modules
   sudo puppet apply --modulepath=$PUPPET_MODULES ./puppet/mc_backup.pp 
+  sudo puppet apply --modulepath=$PUPPET_MODULES ./puppet/mc_showdate.pp 
 }
 
 mc_uninstall() {

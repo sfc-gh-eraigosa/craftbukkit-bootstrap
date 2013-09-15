@@ -1,4 +1,8 @@
-server
+#server
+server/*
+!server/plugins/PermissionsEx/
+!server/plugins/PermissionsEx/permissions.yml
+!server/plugins/PermissionsEx/config.yml
 config
 backup
 bundles

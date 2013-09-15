@@ -1,0 +1,64 @@
+groups:
+  Member:
+    build: true
+    prefix: '&7[Member]&f'
+    default: true
+    permissions:
+    - essentials.help
+    - modifyworld.chat
+    - modifyworld.*
+    - essentials.home
+    - essentials.sethome
+    - essentials.back
+    - essentials.tpa
+    - essentials.tpaccept
+    - essentials.tpdeny
+    - essentials.spawn
+  Donator:
+    build: true
+    inheritance:
+    - Default
+    prefix: '&6[Donator]&f'
+    permissions:
+    - essentials.enchant
+    - essentials.repair
+  Moderator:
+    build: true
+    inheritance:
+    - Default
+    prefix: '&b[Moderator]&7'
+    suffix: '&7'
+    permissions:
+    - essentials.repair
+    - essentials.heal
+    - essentials.item
+    - essentials.give
+    - essentials.fly
+    - essentials.kick
+    - essentials.mute
+    - essentials.tjail
+    - essentials.jail
+    - essentials.tempban
+    - essentials.vanish
+  Admin:
+    build: true
+    inheritance:
+    - Moderator
+    prefix: '&4[&cAdmin&4]&e'
+    suffix: '&7'
+    permissions: 
+    - essentials.gamemode
+    - essentials.ban
+    - essentials.unban
+    - essentials.ipban
+    - essentials.unipban 
+    - essentials.pardon
+    - essentials.enchant
+  Owner:
+    build: true
+    inheritance:
+    - Admin
+    prefix: '&4[Owner]'
+    suffix: '&b'
+    permissions:
+    - '*'

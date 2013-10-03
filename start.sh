@@ -94,19 +94,23 @@ mc_stop() {
 }
 
 mc_update() {
+  CB_DL_URL=http://dl.bukkit.org
+
   if pgrep -u $USERNAME -f $SERVICE > /dev/null
   then
     echo "$SERVICE is running! Will not start update."
   else
-    MC_SERVER_URL=http://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar?v=`date | sed "s/[^a-zA-Z0-9]/_/g"`
-    as_user "cd $MCPATH && wget -q -O $MCPATH/minecraft_server.jar.update $MC_SERVER_URL"
-    if [ -f $MCPATH/minecraft_server.jar.update ]
+    as_user "wget -q -O /tmp/rb.txt $CB_DL_URL/downloads/craftbukkit/list/rb/"
+    DL_URL=${CB_DL_URL}$(grep craftbukkit.jar /tmp/rb.txt|grep downloads|head -1|awk -F'"' '{print $2}'|tr -d '\n')
+
+    as_user "pushd $MCPATH && wget -q -O $MCPATH/craftbukkit.jar.update ${DL_URL}"
+    if [ -f $MCPATH/craftbukkit.jar.update ]
     then
-      if `diff $MCPATH/$SERVICE $MCPATH/minecraft_server.jar.update >/dev/null`
+      if `diff $MCPATH/$SERVICE $MCPATH/craftbukkit.jar.update >/dev/null`
       then
         echo "You are already running the latest version of $SERVICE."
       else
-        as_user "mv $MCPATH/minecraft_server.jar.update $MCPATH/$SERVICE"
+        as_user "mv $MCPATH/craftbukkit.jar.update $MCPATH/$SERVICE"
         echo "Minecraft successfully updated."
       fi
     else

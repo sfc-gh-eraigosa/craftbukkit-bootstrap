@@ -66,7 +66,7 @@ Controls all functions for your minecraft bukkit server on the running system.
 
 ### start.sh update ###
 * This feature is still experimental, our goal is to provide a good way to update minecraft to the next release.  We currently ignore plugins.
-* Check amazonaws download site and update minecraft_server.jar with a new version.
+* Check amazon aws download site and update minecraft_server.jar with a new version.
 
 
 

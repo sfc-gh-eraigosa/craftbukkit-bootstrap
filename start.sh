@@ -5,7 +5,7 @@ CURRENT_DIR=`pwd`
 
 export SERVICE='craftbukkit.jar'
 #export OPTIONS='nogui'
-export USERNAME='bitnami'
+export USERNAME=$(whoami)
 export WORLD='world'
 export MCPATH=${CURRENT_DIR}/server
 export BACKUPPATH=${CURRENT_DIR}/backup
